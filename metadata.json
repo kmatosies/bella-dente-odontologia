@@ -1,0 +1,8 @@
+
+{
+  "name": "Bella Dente Odontologia ",
+  "description": "Sistema completo de controle financeiro para o consultório Bella Dente, com fluxos de caixa, contas a receber por paciente e insights inteligentes via IA.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
