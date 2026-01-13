@@ -1,36 +1,44 @@
-export enum TransactionType {
-  INCOME = 'income',
-  EXPENSE = 'expense'
+// src/types/index.ts
+
+export enum TransactionType { 
+  INCOME = 'INCOME', 
+  EXPENSE = 'EXPENSE', 
+  RECEIVABLE = 'RECEIVABLE' 
 }
 
-export enum PaymentMethod {
-  PIX = 'pix',
-  CASH = 'cash',
-  CREDIT_CARD = 'credit_card',
-  DEBIT_CARD = 'debit_card',
-  BOLETO = 'boleto'
+export enum Category { 
+  PROCEDURE = 'PROCEDURE', 
+  RENT = 'RENT', 
+  SUPPLIES = 'SUPPLIES', 
+  OTHER = 'OTHER' 
+}
+
+export enum PaymentMethod { 
+  PIX = 'PIX', 
+  CASH = 'CASH', 
+  CREDIT_CARD = 'CREDIT_CARD', 
+  DEBIT_CARD = 'DEBIT_CARD', 
+  BOLETO = 'BOLETO' 
 }
 
 export interface Patient {
   id: string;
   name: string;
-  email: string;
   phone: string;
-  treatment: string;
-  status: 'active' | 'completed' | 'pending';
-  totalValue: number;
-  paidValue: number;
-  lastVisit: string;
-  history?: string[];
+  email: string;
+  treatmentHistory: string;
+  createdAt: string;
+  isFinished: boolean;
 }
 
 export interface Transaction {
   id: string;
-  type: TransactionType;
-  category: string;
-  amount: number;
   date: string;
   description: string;
-  patientId?: string;
+  amount: number;
+  type: TransactionType;
+  category: Category;
   paymentMethod: PaymentMethod;
+  patientId?: string;
+  status: 'paid' | 'pending';
 }
