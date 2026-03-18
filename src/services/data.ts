@@ -3,9 +3,9 @@ import { Patient, Transaction, TransactionType, PaymentMethod } from '../types';
 export const INITIAL_PATIENTS: Patient[] = [
   {
     id: '1',
-    name: 'Maria Oliveira',
-    email: 'maria@email.com',
-    phone: '(11) 98765-4321',
+    name: 'Paciente Exemplo A',
+    email: 'paciente.a@exemplo.local',
+    phone: '(00) 00000-0011',
     treatment: 'Implante Dentário',
     status: 'active',
     totalValue: 4500,
@@ -15,9 +15,9 @@ export const INITIAL_PATIENTS: Patient[] = [
   },
   {
     id: '2',
-    name: 'João Santos',
-    email: 'joao@email.com',
-    phone: '(11) 91234-5678',
+    name: 'Paciente Exemplo B',
+    email: 'paciente.b@exemplo.local',
+    phone: '(00) 00000-0012',
     treatment: 'Limpeza e Clareamento',
     status: 'completed',
     totalValue: 800,
@@ -27,9 +27,9 @@ export const INITIAL_PATIENTS: Patient[] = [
   },
   {
     id: '3',
-    name: 'Ana Costa',
-    email: 'ana@email.com',
-    phone: '(11) 95555-4444',
+    name: 'Paciente Exemplo C',
+    email: 'paciente.c@exemplo.local',
+    phone: '(00) 00000-0013',
     treatment: 'Aparelho Ortodôntico',
     status: 'active',
     totalValue: 3200,
@@ -46,7 +46,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
       category: 'Tratamentos',
       amount: 1500,
       date: '2024-03-20',
-      description: 'Entrada Implante - Maria Oliveira',
+      description: 'Entrada Implante - Paciente Exemplo A',
       patientId: '1',
       paymentMethod: PaymentMethod.PIX,
       status: ''
@@ -67,7 +67,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
       category: 'Tratamentos',
       amount: 800,
       date: '2024-03-15',
-      description: 'Pagamento João Santos',
+      description: 'Pagamento Paciente Exemplo B',
       patientId: '2',
       paymentMethod: PaymentMethod.DEBIT_CARD,
       status: ''

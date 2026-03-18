@@ -36,7 +36,7 @@ const PrintableReport: React.FC<PrintableReportProps> = ({
           <p className="font-bold text-xl capitalize text-gray-800">
             {format(currentMonth, 'MMMM yyyy', { locale: ptBR })}
           </p>
-          <p className="text-sm text-gray-500">Dr. Edi Belarmino</p>
+          <p className="text-sm text-gray-500">Responsável Interno</p>
           <p className="text-xs text-gray-400 mt-1">
             Gerado em: {format(new Date(), 'dd/MM/yyyy HH:mm')}
           </p>
