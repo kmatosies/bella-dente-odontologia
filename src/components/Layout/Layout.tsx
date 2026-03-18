@@ -69,7 +69,7 @@ const Layout: React.FC<LayoutProps> = ({
         <header className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Bem-vindo de volta</h2>
-            <p className="text-2xl font-bold">Dr. Edi Belarmino</p>
+            <p className="text-2xl font-bold">Administrador da Clínica</p>
           </div>
           
           <div className="flex items-center gap-4">

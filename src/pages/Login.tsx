@@ -5,6 +5,9 @@ interface LoginProps {
     onLogin: (status: boolean) => void;
 }
 
+const DEMO_LOGIN_EMAIL = import.meta.env.VITE_DEMO_LOGIN_EMAIL?.trim();
+const DEMO_LOGIN_PASSWORD = import.meta.env.VITE_DEMO_LOGIN_PASSWORD?.trim();
+
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,12 +16,18 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Credenciais fixas solicitadas
-        if (email === 'edibelarmino@yahoo.com.br' && password === 'Bell@Dente026') {
-            onLogin(true);
-        } else {
-            setError('E-mail ou senha incorretos.');
+
+        if (!DEMO_LOGIN_EMAIL || !DEMO_LOGIN_PASSWORD) {
+            setError('Acesso de demonstração não configurado. Defina VITE_DEMO_LOGIN_EMAIL e VITE_DEMO_LOGIN_PASSWORD no .env.local.');
+            return;
         }
+
+        if (email === DEMO_LOGIN_EMAIL && password === DEMO_LOGIN_PASSWORD) {
+            onLogin(true);
+            return;
+        }
+
+        setError('E-mail ou senha incorretos.');
     };
 
     return (

@@ -1,28 +1,43 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const API_BASE_URL = (import.meta.env.VITE_GEMINI_API_BASE_URL || '').replace(/\/$/, '');
 
-// Inicializa a IA
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+function buildUrl(path: string) {
+  return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+}
 
-// IMPORTANTE: Use o modelo 'gemini-1.5-flash' que é o padrão atual
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+async function postJson<T>(path: string, body: unknown): Promise<T> {
+  const response = await fetch(buildUrl(path), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
 
-export const analyzeData = async (transactions: any[], totalRevenue: number, totalExpenses: number) => {
-  try {
-    const financialContext = `
-      Você é a Bella IA, consultora financeira de uma clínica.
-      Dados do mês:
-      - Faturamento: R$ ${totalRevenue}
-      - Despesas: R$ ${totalExpenses}
-      - Saldo: R$ ${totalRevenue - totalExpenses}
-      
-      Analise esses números brevemente e dê 3 dicas práticas. Use formatação Markdown.
-    `;
+  const payload = await response.json().catch(() => ({}));
 
-    const result = await model.generateContent(financialContext);
-    const response = await result.response;
-    return response.text();
-  } catch (error) {
-    console.error("Erro na API Gemini:", error);
-    throw new Error("Erro ao conectar com a IA. Verifique sua chave API.");
+  if (!response.ok) {
+    const message = typeof payload?.error === 'string' ? payload.error : 'Falha ao comunicar com o proxy do Gemini.';
+    throw new Error(message);
   }
-};
+
+  return payload as T;
+}
+
+export async function analyzeData(transactions: unknown[], totalRevenue: number, totalExpenses: number) {
+  const payload = await postJson<{ analysis: string }>('/api/gemini/analyze', {
+    transactions,
+    totalRevenue,
+    totalExpenses,
+  });
+
+  return payload.analysis;
+}
+
+export async function scanMedicalRecord(base64Image: string, mimeType = 'image/jpeg') {
+  const payload = await postJson<{ extracted: Record<string, unknown> }>('/api/gemini/scan-record', {
+    base64Image,
+    mimeType,
+  });
+
+  return payload.extracted;
+}

@@ -7,8 +7,8 @@ import { Transaction, Patient, TransactionType, Category, PaymentMethod } from '
 
 // DADOS INICIAIS DO ARQUIVO ORIGINAL 
 const INITIAL_PATIENTS: Patient[] = [
-  { id: 'p1', name: 'João Silva', phone: '(11) 98888-7777', email: 'joao@email.com', treatmentHistory: 'Tratamento de clareamento concluído.', createdAt: '2023-01-10', isFinished: false },
-  { id: 'p2', name: 'Maria Oliveira', phone: '(11) 97777-6666', email: 'maria@email.com', treatmentHistory: 'Planejamento de implantes.', createdAt: '2023-05-15', isFinished: false },
+  { id: 'p1', name: 'Paciente Exemplo 01', phone: '(00) 00000-0001', email: 'paciente01@exemplo.local', treatmentHistory: 'Tratamento de clareamento concluído.', createdAt: '2023-01-10', isFinished: false },
+  { id: 'p2', name: 'Paciente Exemplo 02', phone: '(00) 00000-0002', email: 'paciente02@exemplo.local', treatmentHistory: 'Planejamento de implantes.', createdAt: '2023-05-15', isFinished: false },
   // ... adicione os outros pacientes do original se quiser
 ];
 

@@ -17,8 +17,8 @@ export const processMedicalRecordImage = async (imageFile: string): Promise<Pati
   // Retornamos um objeto completo, e não apenas texto
   return {
     name: "Paciente Identificado (IA)",
-    phone: "(11) 99999-0000",
-    email: "paciente.ia@email.com",
+    phone: "(00) 00000-0099",
+    email: "paciente.ia@exemplo.local",
     treatment: "Avaliação Inicial via Imagem"
   };
 };

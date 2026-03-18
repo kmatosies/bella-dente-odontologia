@@ -12,7 +12,7 @@ Objetivo do agente
 Arquitetura e padrões importantes
 - Monolítico no frontend: grande parte da lógica central está em [App.tsx](App.tsx#L1-L40). Para manutenção prefira extrair lógica para `src/hooks` e apresentar pequenos componentes em `src/components`.
 - Padrão de dados: estado local (useState/useMemo) para `patients`, `transactions` e `aiAnalysis`. Não há backend por padrão; as `services/` existem mas estão vazias (`src/services/*`).
-- Integração AI: usa `@google/genai` diretamente em componentes (veja chamadas em [App.tsx](App.tsx#L200-L260)). A chave é `GEMINI_API_KEY` fornecida em `.env.local` e mapeada em `vite.config.ts` para `process.env.API_KEY`.
+- Integração AI: o front-end deve consumir o proxy backend em `server/gemini-proxy.mjs`; a chave `GEMINI_API_KEY` deve existir apenas no servidor/local env e nunca no bundle do navegador.
 
 Dependências e integrações externas
 - `@google/genai` — usado para geração e análise (ver `getAiInsight` e `captureAndScan` em `App.tsx`).
@@ -27,8 +27,8 @@ npm install
 npm run dev
 ```
 
-- Defina `.env.local` com `GEMINI_API_KEY` antes de usar features AI (README já documenta isso).
-- Para depurar variáveis definidas em Vite, prefira `console.log(import.meta.env)` ou verificar `process.env.API_KEY` conforme `vite.config.ts`.
+- Defina `.env.local` a partir de `.env.example` antes de usar o proxy Gemini, Firebase ou o login de demonstração (README já documenta isso).
+- Para depurar a IA, valide primeiro `GET /health` no proxy e só então revise as variáveis do servidor/local env.
 
 Conventions específicas deste repo
 - Componentes UI: `src/components/*` (ex.: `src/components/patients/PatientCard.tsx`).
@@ -38,17 +38,17 @@ Conventions específicas deste repo
 
 Gotchas e avisos detectados
 - Estrutura inválida: há diretórios com nomes de arquivo em `src/` (ex.: `src/App.tsx/` e `src/main.tsx/` são pastas vazias). Isso causa erros de resolução e ferramentas podem tratar `App.tsx` como pasta em vez de arquivo. Quando for criar/renomear, sempre usar arquivo único `App.tsx` (não uma pasta com esse nome).
-- Autenticação: login hard-coded em `App.tsx` / `src/pages/Login.tsx` — não há autenticação real. Ao implementar backend, mova validação para `src/services/auth.service.ts`.
+- Autenticação: o login de demonstração deve ser configurado por variáveis de ambiente locais (`VITE_DEMO_LOGIN_EMAIL` e `VITE_DEMO_LOGIN_PASSWORD`). Nunca commitar credenciais reais no repositório; para produção, mover validação para um serviço de autenticação real.
 - Serviços vazios: `src/services/auth.service.ts`, `patient.service.ts`, `transaction.service.ts` estão vazios. Implementar chamadas de rede/abstrações lá evita lógica dispersa.
 
 Exemplos práticos (copiar/colar)
 - Chamada rápida ao GenAI (exemplo usado no projeto):
 
 ```ts
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-const response = await ai.models.generateContent({
-  model: 'gemini-3-flash-preview',
-  contents: 'Seu prompt aqui'
+const response = await fetch('/api/gemini/analyze', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ totalRevenue: 1000, totalExpenses: 350, transactions: [] })
 });
 ```
 
