@@ -30,7 +30,7 @@ const BellaIA: React.FC<BellaIAProps> = ({ transactions }) => {
       const result = await analyzeData(transactions, revenue, expenses);
       setAnalysis(result);
     } catch (err) {
-      setError('A Bella IA está indisponível no momento. Verifique se o proxy backend está ativo e tente novamente.');
+      setError('A Bella IA está indisponível no momento. Verifique se o servidor proxy está ativo e tente novamente.');
     } finally {
       setLoading(false);
     }

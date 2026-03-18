@@ -73,7 +73,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ isOpen, onClose, o
         onClose();
       } catch (err) {
         console.error(err);
-        alert('Erro ao processar imagem no proxy da IA. Verifique se o servidor backend está ativo.');
+        alert('Erro ao processar imagem no proxy da IA. Verifique se o servidor proxy está ativo.');
       } finally {
         setIsScanning(false);
       }

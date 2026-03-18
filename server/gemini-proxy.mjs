@@ -160,6 +160,6 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.info(`[gemini-proxy] running on http://${HOST}:${PORT}`);
-  console.info(`[gemini-proxy] Gemini key configured: ${GEMINI_API_KEY ? 'yes' : 'no'}`);
+  console.info(`[proxy-gemini] em execução em http://${HOST}:${PORT}`);
+  console.info(`[proxy-gemini] chave do Gemini configurada: ${GEMINI_API_KEY ? 'sim' : 'não'}`);
 });

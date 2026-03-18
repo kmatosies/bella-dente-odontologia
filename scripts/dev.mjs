@@ -15,7 +15,7 @@ function start(name, command, args) {
       return;
     }
 
-    console.error(`[dev:${name}] exited with code=${code ?? 'null'} signal=${signal ?? 'null'}`);
+    console.error(`[dev:${name}] finalizado com código=${code ?? 'null'} sinal=${signal ?? 'null'}`);
     shutdown(typeof code === 'number' ? code : 1);
   });
 

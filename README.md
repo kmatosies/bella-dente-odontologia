@@ -3,7 +3,7 @@
 
   # Bella Dente Odontologia
 
-  **Plataforma web para gestão odontológica com dashboard financeiro, organização clínica e recursos assistidos por IA.**
+  **Plataforma web para gestão odontológica com painel financeiro, organização clínica e recursos assistidos por IA.**
 
   <p>
     <img alt="React" src="https://img.shields.io/badge/React-19-20232A?logo=react" />
@@ -22,9 +22,9 @@ O **Bella Dente Odontologia** é uma aplicação web pensada para apoiar a rotin
 
 O repositório combina:
 
-- **camada de apresentação já funcional**, com login, layout administrativo e dashboard financeiro;
+- **camada de apresentação já funcional**, com login, navegação administrativa e painel financeiro;
 - **base arquitetural pronta para evolução**, incluindo agenda, pacientes, financeiro, integração com Firebase e recursos de IA com Gemini;
-- **proteção de chave de IA via proxy backend**, evitando expor o segredo diretamente no navegador.
+- **proteção de chave de IA via proxy de backend**, evitando expor o segredo diretamente no navegador.
 
 > **Status atual:** MVP funcional em evolução, com foco em UX, organização do código e preparação para dados persistidos e autenticação real.
 
@@ -32,17 +32,17 @@ O repositório combina:
 
 ## Destaques
 
-- Dashboard financeiro com visão rápida de entradas, saídas, saldo e valores pendentes.
+- Painel financeiro com visão rápida de entradas, saídas, saldo e valores pendentes.
 - Interface administrativa responsiva com navegação lateral e tema claro/escuro.
 - Estrutura preparada para módulos de **Pacientes**, **Agenda**, **Financeiro** e **Bella IA**.
-- Integração com Gemini protegida por **proxy backend local**, sem chave embutida no bundle do front-end.
+- Integração com Gemini protegida por **proxy local de backend**, sem chave embutida no pacote do front-end.
 - Base preparada para evolução com **Firebase Authentication** e **Cloud Firestore**.
 
 ---
 
 ## Stack tecnológica
 
-### Front-end
+### Interface cliente
 
 - **React 19**
 - **TypeScript**
@@ -53,7 +53,7 @@ O repositório combina:
 
 ### Integrações e serviços
 
-- **Google Gemini** via proxy backend
+- **Google Gemini** via proxy de backend
 - **Firebase Authentication**
 - **Cloud Firestore**
 - **jsPDF**
@@ -67,19 +67,19 @@ A solução está organizada em duas frentes principais:
 ### 1. Aplicação cliente
 Responsável pela interface, experiência do usuário, navegação, dashboard e módulos visuais.
 
-### 2. Proxy backend do Gemini
+### 2. Proxy de backend do Gemini
 Responsável por receber chamadas de IA do front-end e executar a comunicação com o Gemini no servidor, mantendo `GEMINI_API_KEY` fora do navegador.
 
 ### Fluxo resumido
 
 ```text
-Usuário → Front-end React/Vite → Proxy /api/gemini/* → Gemini API
+Usuário → aplicação cliente React/Vite → proxy /api/gemini/* → Gemini API
 ```
 
 Essa abordagem traz dois benefícios importantes:
 
 - **mais segurança**, ao evitar exposição direta da chave no cliente;
-- **mais flexibilidade**, ao permitir evolução futura para autenticação, rate limit, logs e auditoria no backend.
+- **mais flexibilidade**, ao permitir evolução futura para autenticação, limitação de requisições, registros e auditoria no backend.
 
 ---
 
@@ -111,7 +111,7 @@ Essa abordagem traz dois benefícios importantes:
 
 ```text
 bella-dente-odontologia/
-├── server/              # Proxy backend do Gemini
+├── server/              # Proxy de backend do Gemini
 ├── scripts/             # Scripts auxiliares de desenvolvimento
 ├── src/
 │   ├── components/      # Componentes reutilizáveis de UI
@@ -153,18 +153,18 @@ Crie um `.env.local` com base no `.env.example`.
 npm run dev
 ```
 
-Esse comando sobe:
+Esse comando inicia:
 
-- **front-end Vite** em `http://localhost:5173`
-- **proxy Gemini** em `http://localhost:8787`
+- **interface cliente Vite** em `http://localhost:5173`
+- **proxy do Gemini** em `http://localhost:8787`
 
-### 4. Gere a build de produção
+### 4. Gere a versão de produção
 
 ```bash
 npm run build
 ```
 
-### 5. Faça preview do front-end
+### 5. Faça a pré-visualização da interface cliente
 
 ```bash
 npm run preview
@@ -195,7 +195,7 @@ VITE_DEMO_LOGIN_PASSWORD=change-me
 ### Observações importantes
 
 - `GEMINI_API_KEY` deve existir **somente no servidor/proxy**.
-- O front-end **não consome mais a chave do Gemini diretamente**.
+- A interface cliente **não consome mais a chave do Gemini diretamente**.
 - `VITE_GEMINI_API_BASE_URL` é opcional e útil quando o front-end precisa apontar para um proxy remoto.
 - As variáveis `VITE_FIREBASE_*` são usadas pela configuração do Firebase no cliente.
 - O login de demonstração é apenas para desenvolvimento/local e **não substitui autenticação real**.
@@ -205,12 +205,12 @@ VITE_DEMO_LOGIN_PASSWORD=change-me
 ## Scripts disponíveis
 
 ```bash
-npm run dev          # Inicia front-end + proxy Gemini
-npm run dev:client   # Inicia apenas o front-end
-npm run dev:server   # Inicia apenas o proxy Gemini
-npm run build        # Gera a build do front-end
-npm run preview      # Faz preview da build do front-end
-npm run start:server # Inicia apenas o proxy backend
+npm run dev          # Inicia interface cliente + proxy do Gemini
+npm run dev:client   # Inicia apenas a interface cliente
+npm run dev:server   # Inicia apenas o proxy do Gemini
+npm run build        # Gera a versão de produção da interface
+npm run preview      # Faz a pré-visualização da versão de produção da interface
+npm run start:server # Inicia apenas o proxy de backend
 ```
 
 ---
@@ -221,7 +221,7 @@ O projeto já adota algumas medidas para reduzir exposição indevida de credenc
 
 - remoção de credenciais hardcoded do repositório;
 - versionamento de `.env.example` em vez de `.env` real;
-- uso de proxy backend para chamadas do Gemini;
+- uso de proxy de backend para chamadas do Gemini;
 - sanitização de dados de demonstração e placeholders visuais.
 
 ### Recomendação para próximas etapas
@@ -231,7 +231,7 @@ Para ambientes de produção, o ideal é avançar com:
 - autenticação real com Firebase Auth ou backend próprio;
 - regras de segurança robustas no Firestore;
 - controle de acesso por perfil;
-- observabilidade e auditoria no proxy backend;
+- observabilidade e auditoria no proxy de backend;
 - limitação de requisições para endpoints de IA.
 
 ---

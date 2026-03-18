@@ -1,48 +1,46 @@
-# Copilot instructions — Bella Dente Odontologia
+# Instruções do Copilot — Bella Dente Odontologia
 
-Resumo rápido
-- Projeto: SPA React + Vite (TypeScript), UI em `src/components`, páginas em `src/pages`.
-- Entrypoint: [index.tsx](index.tsx#L1-L20) imports `App` (arquivo `App.tsx` na raiz).
-- Dev: `npm install` → `npm run dev` (Vite server na porta 3000, host 0.0.0.0).
+## Resumo rápido
+- Projeto: SPA em React + Vite + TypeScript, com interface em `src/components` e páginas em `src/pages`.
+- Ponto de entrada: [index.tsx](index.tsx#L1-L20) importa `App` (arquivo `App.tsx` na raiz).
+- Desenvolvimento: `npm install` → `npm run dev` (servidor Vite e proxy do Gemini em execução local).
 
-Objetivo do agente
-- Ajudar com features React/TS, refatoração em componentes, e integrações com Google GenAI.
-- Ser explícito sobre mudanças de arquivo e evitar renomear arquivos para pastas (ver aviso abaixo).
+## Objetivo do agente
+- Ajudar com funcionalidades em React/TypeScript, refatoração em componentes e integrações com Google GenAI.
+- Ser explícito sobre mudanças de arquivo e evitar renomear arquivos para pastas sem necessidade.
 
-Arquitetura e padrões importantes
-- Monolítico no frontend: grande parte da lógica central está em [App.tsx](App.tsx#L1-L40). Para manutenção prefira extrair lógica para `src/hooks` e apresentar pequenos componentes em `src/components`.
-- Padrão de dados: estado local (useState/useMemo) para `patients`, `transactions` e `aiAnalysis`. Não há backend por padrão; as `services/` existem mas estão vazias (`src/services/*`).
-- Integração AI: o front-end deve consumir o proxy backend em `server/gemini-proxy.mjs`; a chave `GEMINI_API_KEY` deve existir apenas no servidor/local env e nunca no bundle do navegador.
+## Arquitetura e padrões importantes
+- Estrutura monolítica no front-end: boa parte da lógica central ainda vive em `App.tsx`. Sempre que possível, prefira extrair lógica para `src/hooks` e apresentar pequenos componentes em `src/components`.
+- Padrão de dados: uso predominante de estado local (`useState` / `useMemo`) para `patients`, `transactions` e `aiAnalysis`.
+- Integração com IA: o front-end deve consumir o proxy local em `server/gemini-proxy.mjs`; a chave `GEMINI_API_KEY` deve existir somente no servidor/ambiente local e nunca no bundle do navegador.
 
-Dependências e integrações externas
-- `@google/genai` — usado para geração e análise (ver `getAiInsight` e `captureAndScan` em `App.tsx`).
-- `recharts`, `jspdf`, `lucide-react` — visualização, export e ícones.
-- Browser APIs: `navigator.mediaDevices.getUserMedia` é usado para leitura de câmera.
+## Dependências e integrações externas
+- `@google/genai` — usado para geração e análise por meio do proxy.
+- `recharts`, `jspdf`, `lucide-react` — gráficos, exportação e ícones.
+- APIs do navegador: `navigator.mediaDevices.getUserMedia` é usado para leitura de câmera.
 
-Developer workflow (prático)
-- Instalar e rodar localmente:
+## Fluxo de trabalho prático
 
 ```bash
 npm install
 npm run dev
 ```
 
-- Defina `.env.local` a partir de `.env.example` antes de usar o proxy Gemini, Firebase ou o login de demonstração (README já documenta isso).
-- Para depurar a IA, valide primeiro `GET /health` no proxy e só então revise as variáveis do servidor/local env.
+- Defina `.env.local` a partir de `.env.example` antes de usar o proxy do Gemini, Firebase ou o login de demonstração.
+- Para depurar a IA, valide primeiro `GET /health` no proxy e só depois revise as variáveis do servidor/ambiente local.
 
-Conventions específicas deste repo
-- Componentes UI: `src/components/*` (ex.: `src/components/patients/PatientCard.tsx`).
-- Páginas: `src/pages/*` (ex.: `src/pages/Login.tsx`).
-- Hooks reutilizáveis: `src/hooks/*` (ex.: `usePatients.ts`).
-- Services: `src/services/*` — local para lógica de rede; hoje estão vazios, mova a lógica de fetch/CRUD para aqui quando adicionar API.
+## Convenções deste repositório
+- Componentes de UI: `src/components/*`.
+- Páginas: `src/pages/*`.
+- Hooks reutilizáveis: `src/hooks/*`.
+- Serviços: `src/services/*` — local recomendado para lógica de rede, integração e CRUD.
 
-Gotchas e avisos detectados
-- Estrutura inválida: há diretórios com nomes de arquivo em `src/` (ex.: `src/App.tsx/` e `src/main.tsx/` são pastas vazias). Isso causa erros de resolução e ferramentas podem tratar `App.tsx` como pasta em vez de arquivo. Quando for criar/renomear, sempre usar arquivo único `App.tsx` (não uma pasta com esse nome).
-- Autenticação: o login de demonstração deve ser configurado por variáveis de ambiente locais (`VITE_DEMO_LOGIN_EMAIL` e `VITE_DEMO_LOGIN_PASSWORD`). Nunca commitar credenciais reais no repositório; para produção, mover validação para um serviço de autenticação real.
-- Serviços vazios: `src/services/auth.service.ts`, `patient.service.ts`, `transaction.service.ts` estão vazios. Implementar chamadas de rede/abstrações lá evita lógica dispersa.
+## Cuidados e avisos detectados
+- Há sinais de estrutura antiga/inconsistente no projeto. Ao criar ou mover arquivos, mantenha `App.tsx` e `main.tsx` como arquivos únicos, evitando diretórios com esses nomes.
+- O login de demonstração deve ser configurado com `VITE_DEMO_LOGIN_EMAIL` e `VITE_DEMO_LOGIN_PASSWORD`. Nunca commitar credenciais reais.
+- A evolução natural do projeto pede consolidação dos serviços em `src/services/*`, evitando espalhar lógica de integração pelos componentes.
 
-Exemplos práticos (copiar/colar)
-- Chamada rápida ao GenAI (exemplo usado no projeto):
+## Exemplos práticos
 
 ```ts
 const response = await fetch('/api/gemini/analyze', {
@@ -52,17 +50,10 @@ const response = await fetch('/api/gemini/analyze', {
 });
 ```
 
-- Exportar relatório em PDF (usado em `App.tsx`): `const doc = new jsPDF(); doc.save('relatorio.pdf')`.
-
-Como o agente deve operar
-- Proponha mudanças pequenas e reversíveis (PRs pequenos).
-- Ao refatorar `App.tsx`, extraia em passos: 1) mover lógica para `src/hooks`, 2) criar componentes em `src/components`, 3) atualizar `App.tsx` para montar esses hooks/componentes.
-- Quando sugerir adicionar dependência, inclua linha `npm install <pkg>` e motivo curto.
-
-Solicitação de feedback
-- Revise estas instruções e diga se quer que eu:
-  - Documente contratos/props para componentes principais; ou
-  - Normalize a estrutura movendo `App.tsx` para `src/` e removendo pastas conflitantes automaticamente.
+## Como o agente deve operar
+- Propor mudanças pequenas, reversíveis e de baixo risco.
+- Ao refatorar `App.tsx`, trabalhar em etapas: extrair lógica, criar componentes e só então reorganizar a composição final.
+- Ao sugerir dependências, incluir o comando de instalação e o motivo.
 
 ---
-Arquivo gerado automaticamente — reporte divergências e eu ajusto.
+Arquivo gerado automaticamente — reporte divergências para ajuste.
