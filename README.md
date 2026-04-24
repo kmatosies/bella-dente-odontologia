@@ -130,48 +130,6 @@ bella-dente-odontologia/
 
 ---
 
-## Como executar localmente
-
-### Pré-requisitos
-
-- **Node.js 20+** recomendado
-- **npm**
-
-### 1. Instale as dependências
-
-```bash
-npm install
-```
-
-### 2. Configure o ambiente
-
-Crie um `.env.local` com base no `.env.example`.
-
-### 3. Inicie o ambiente de desenvolvimento
-
-```bash
-npm run dev
-```
-
-Esse comando inicia:
-
-- **interface cliente Vite** em `http://localhost:5173`
-- **proxy do Gemini** em `http://localhost:8787`
-
-### 4. Gere a versão de produção
-
-```bash
-npm run build
-```
-
-### 5. Faça a pré-visualização da interface cliente
-
-```bash
-npm run preview
-```
-
----
-
 ## Variáveis de ambiente
 
 Use o arquivo `.env.example` como referência.
@@ -223,35 +181,6 @@ O projeto já adota algumas medidas para reduzir exposição indevida de credenc
 - versionamento de `.env.example` em vez de `.env` real;
 - uso de proxy de backend para chamadas do Gemini;
 - sanitização de dados de demonstração e placeholders visuais.
-
-### Recomendação para próximas etapas
-
-Para ambientes de produção, o ideal é avançar com:
-
-- autenticação real com Firebase Auth ou backend próprio;
-- regras de segurança robustas no Firestore;
-- controle de acesso por perfil;
-- observabilidade e auditoria no proxy de backend;
-- limitação de requisições para endpoints de IA.
-
----
-
-## Roadmap sugerido
-
-- integrar autenticação real ao fluxo principal;
-- conectar os módulos já existentes ao menu principal;
-- persistir pacientes, transações e agenda no Firestore;
-- ampliar relatórios operacionais e financeiros;
-- evoluir a Bella IA para suporte gerencial mais avançado;
-- adicionar testes automatizados para componentes e regras críticas.
-
----
-
-## Licença
-
-Este repositório ainda **não possui licença declarada**.
-
-Se o projeto for distribuído publicamente, recomenda-se adicionar um arquivo `LICENSE` com a licença apropriada.
 
 ---
 
