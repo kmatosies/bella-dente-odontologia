@@ -128,38 +128,6 @@ bella-dente-odontologia/
 └── README.md            # Documentação do projeto
 ```
 
----
-
-## Variáveis de ambiente
-
-Use o arquivo `.env.example` como referência.
-
-```env
-GEMINI_API_KEY=
-GEMINI_PROXY_PORT=8787
-GEMINI_PROXY_ALLOWED_ORIGIN=http://localhost:5173
-VITE_GEMINI_API_BASE_URL=
-VITE_FIREBASE_API_KEY=
-VITE_FIREBASE_AUTH_DOMAIN=
-VITE_FIREBASE_PROJECT_ID=
-VITE_FIREBASE_STORAGE_BUCKET=
-VITE_FIREBASE_MESSAGING_SENDER_ID=
-VITE_FIREBASE_APP_ID=
-VITE_USE_EMULATORS=false
-VITE_DEMO_LOGIN_EMAIL=demo@local.test
-VITE_DEMO_LOGIN_PASSWORD=change-me
-```
-
-### Observações importantes
-
-- `GEMINI_API_KEY` deve existir **somente no servidor/proxy**.
-- A interface cliente **não consome mais a chave do Gemini diretamente**.
-- `VITE_GEMINI_API_BASE_URL` é opcional e útil quando o front-end precisa apontar para um proxy remoto.
-- As variáveis `VITE_FIREBASE_*` são usadas pela configuração do Firebase no cliente.
-- O login de demonstração é apenas para desenvolvimento/local e **não substitui autenticação real**.
-
----
-
 ## Scripts disponíveis
 
 ```bash
