@@ -19,26 +19,6 @@ Acesse:
 
 ---
 
-## 🚀 Rodar o Sistema Real Localmente
-
-**Pré-requisitos:** Node.js
-
-1. Instale as dependências:
-   ```bash
-   npm install
-   ```
-2. Configure o arquivo `.env.local` com suas chaves Firebase e Gemini:
-   ```
-   VITE_FIREBASE_API_KEY=...
-   VITE_GEMINI_API_KEY=...
-   ```
-3. Rode o servidor de desenvolvimento:
-   ```bash
-   npm run dev
-   ```
-
----
-
 ## 🛠️ Tecnologias
 
 - **Frontend:** React + TypeScript + Vite + Tailwind CSS
