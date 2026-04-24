@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bella Dente — Sistema de Gestão Odontológica (Demo)</title>
+  <meta name="description" content="Demo pública do sistema Bella Dente." />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            teal: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-gray-50 text-slate-800 transition-colors duration-200">
+
+  <!-- BANNER DE AVISO -->
+  <div class="demo-banner bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800 p-2 text-center text-amber-800 dark:text-amber-200 text-sm font-medium z-50 relative">
+    ⚠️ <strong>Ambiente demonstrativo.</strong> Todos os dados exibidos são fictícios.
+  </div>
+
+  <div class="min-h-screen flex" id="app-container">
+    
+    <!-- Sidebar Mobile Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden"></div>
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-[220px] flex flex-col border-r transition-all duration-300 ease-in-out bg-white dark:bg-slate-800 border-gray-100 dark:border-slate-700 -translate-x-full lg:translate-x-0">
+      <!-- Logo -->
+      <div class="px-5 pt-6 pb-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center shadow-md">
+          <span class="text-white text-lg">🦷</span>
+        </div>
+        <div>
+          <span class="text-lg font-extrabold text-slate-800 dark:text-white">Bella </span>
+          <span class="text-lg font-extrabold text-teal-600">Dente</span>
+        </div>
+      </div>
+
+      <!-- Menu Principal -->
+      <div class="px-5 mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Menu Principal</div>
+      <nav class="flex-1 px-3 space-y-1" id="nav-menu">
+        <button data-target="agenda" class="nav-btn w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 group bg-teal-600 text-white shadow-md shadow-teal-600/20">
+          <i data-lucide="calendar-days" class="w-[18px] h-[18px]"></i> Agenda
+        </button>
+        <button data-target="pacientes" class="nav-btn w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 group text-slate-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white">
+          <i data-lucide="users" class="w-[18px] h-[18px]"></i> Pacientes
+        </button>
+        <button data-target="financeiro" class="nav-btn w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 group text-slate-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white">
+          <i data-lucide="wallet" class="w-[18px] h-[18px]"></i> Financeiro
+        </button>
+        <button data-target="dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 group text-slate-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white">
+          <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Painel Geral
+        </button>
+
+        <div class="pt-4 px-2 mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Clínico</div>
+        <button data-target="relatorios" class="nav-btn w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 group text-slate-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white">
+          <i data-lucide="bar-chart-3" class="w-[18px] h-[18px]"></i> Relatórios
+        </button>
+        <button data-target="prontuario" class="nav-btn w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 group text-slate-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white">
+          <i data-lucide="clipboard-list" class="w-[18px] h-[18px]"></i> Prontuário
+        </button>
+        
+        <div class="pt-4 px-2 mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Sistema</div>
+        <button data-target="configuracoes" class="nav-btn w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 group text-slate-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white">
+          <i data-lucide="settings" class="w-[18px] h-[18px]"></i> Configurações
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="p-4 border-t border-gray-100 dark:border-slate-700">
+        <button class="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-xl transition-colors">
+          <i data-lucide="log-out" class="w-[18px] h-[18px]"></i> Sair (Demo)
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="flex-1 flex flex-col min-h-screen w-full lg:w-[calc(100%-220px)] overflow-x-hidden">
+      
+      <!-- Header -->
+      <header class="h-16 flex items-center justify-between px-6 border-b bg-white dark:bg-slate-800 border-gray-100 dark:border-slate-700 shrink-0">
+        <div class="flex items-center gap-4">
+          <button id="hamburger" class="lg:hidden p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 dark:text-white">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <h1 id="page-title" class="text-lg font-bold dark:text-white">Agenda</h1>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Dark Mode Toggle -->
+          <button id="dark-mode-toggle" class="p-2.5 rounded-xl transition-colors bg-gray-50 dark:bg-slate-700 text-slate-500 dark:text-yellow-400 hover:bg-gray-100 dark:hover:bg-slate-600">
+            <i data-lucide="moon" id="moon-icon" class="w-[18px] h-[18px]"></i>
+            <i data-lucide="sun" id="sun-icon" class="w-[18px] h-[18px] hidden"></i>
+          </button>
+
+          <!-- Notifications -->
+          <div class="relative" id="notifications-dropdown">
+            <button id="notif-btn" class="p-2.5 rounded-xl transition-colors relative bg-gray-50 dark:bg-slate-700 text-slate-500 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-600">
+              <i data-lucide="bell" class="w-[18px] h-[18px]"></i>
+              <span class="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-sm animate-pulse">2</span>
+            </button>
+            <!-- Dropdown content (hidden by default) -->
+            <div id="notif-menu" class="absolute right-0 top-full mt-2 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-700 hidden z-50 overflow-hidden">
+              <div class="px-4 py-3 border-b border-gray-100 dark:border-slate-700">
+                <h3 class="font-bold text-sm dark:text-white">Notificações</h3>
+              </div>
+              <div class="max-h-64 overflow-y-auto">
+                <div class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors border-b border-gray-50 dark:border-slate-700">
+                  <p class="text-sm font-semibold dark:text-white">Ana Paula Ferreira</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">Consulta de Clareamento às 08:00</p>
+                </div>
+                <div class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">
+                  <p class="text-sm font-semibold dark:text-white">Carlos Eduardo Souza</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">Acompanhamento de Implante às 09:00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hidden sm:flex items-center gap-3 ml-2 pl-3 border-l border-gray-200 dark:border-slate-600">
+            <div class="text-right">
+              <p class="text-sm font-bold leading-tight dark:text-white">Edi Belarmino</p>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-teal-600">Doutor Responsável</p>
+            </div>
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
+              EB
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Container -->
+      <main class="flex-1 p-3 sm:p-6 overflow-y-auto bg-gray-50 dark:bg-slate-900 transition-colors duration-200">
+        <div id="content-container"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Container -->
+  <div id="modal-container" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden">
+    <div id="modal-content" class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
+      <!-- Content injected by JS -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
